@@ -15,4 +15,6 @@ const args = require('yargs')
   .help()
   .argv;
 
-geocode.geocodeAddress(args.address)
+// geocode.getWeather(args.address)
+
+geocode.geocodeAddress(args.address);
