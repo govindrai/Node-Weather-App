@@ -24,7 +24,6 @@ axios.get(mapsURL).then((response) => {
   let longitude = results.geometry.location.lng;
   let baseWeatherURL = `https://api.darksky.net/forecast/${process.env.DARK_SKY_API_KEY}/`;
   let weatherURL = baseWeatherURL + encodeURIComponent(`${latitude},${longitude}`);
-  console.log(weatherURL)
   return axios.get(weatherURL)
 }).then((response) => {
   console.log(`This temperature is ${response.data.currently.temperature}. It feels like ${response.data.currently.apparentTemperature}.`)
