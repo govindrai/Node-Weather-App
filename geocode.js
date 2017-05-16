@@ -1,30 +1,25 @@
-const request = require('request')
+const request = require('request');
 
 var geocodeAddress = (address) => {
-  let baseURL = "https://maps.googleapis.com/maps/api/geocode/json?address=";
-  let url = baseURL + encodeURIComponent(address);
+  let url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + encodeURIComponent(address);
+
   request({
     url: url,
     json: true
   }, (error, response, body) => {
     if (error) {
-      console.log("there's an error connecting brah")
-      console.log(error)
+      console.log("Unable to connect to Google Servers");
     } else {
-      console.log("I don't have errors")
       if (body.status === "OK") {
-        let results = body.results[0];
-        queryDarkSky(results.geometry.location); //latLng
-
+        queryDarkSky(body.results[0].geometry.location);
       } else if (body.status === "ZERO_RESULTS") {
         console.log("I'm sorry, no address matches " + address);
       } else {
-        console.log("I made it here in teh last else")
         console.log(body.error_message);
       }
     }
   });
-}
+};
 
 var queryDarkSky = (latLng) => {
   var baseURL = `https://api.darksky.net/forecast/${process.env.DARK_SKY_API_KEY}/`;
@@ -38,13 +33,12 @@ var queryDarkSky = (latLng) => {
       console.log(error);
     } else {
       console.log("Hooray! We were able to connect to DarkSky servers");
-      console.log(body.currently.temperature);
-      console.log(body.daily.summary);
+      console.log(`"It is currently ${body.currently.temperature} degrees Farenheit`);
+      console.log(`Here's a summary ${body.daily.summary}`);
     }
   })
-
-}
+};
 
 module.exports = {
   geocodeAddress
-}
+};

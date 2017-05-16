@@ -1,6 +1,3 @@
-// weather app
-// take input from the user and query google maps api for lat and long and address
-
 const geocode = require('./geocode');
 
 const args = require('yargs')
@@ -14,7 +11,5 @@ const args = require('yargs')
   })
   .help()
   .argv;
-
-// geocode.getWeather(args.address)
 
 geocode.geocodeAddress(args.address);
